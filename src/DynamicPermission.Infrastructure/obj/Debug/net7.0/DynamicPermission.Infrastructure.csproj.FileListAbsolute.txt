@@ -1,0 +1,17 @@
+D:\asp.net_workspace\Dynamic_Permission\src\DynamicPermission.Infrastructure\bin\Debug\net7.0\DynamicPermission.Infrastructure.deps.json
+D:\asp.net_workspace\Dynamic_Permission\src\DynamicPermission.Infrastructure\bin\Debug\net7.0\DynamicPermission.Infrastructure.dll
+D:\asp.net_workspace\Dynamic_Permission\src\DynamicPermission.Infrastructure\bin\Debug\net7.0\DynamicPermission.Infrastructure.pdb
+D:\asp.net_workspace\Dynamic_Permission\src\DynamicPermission.Infrastructure\bin\Debug\net7.0\DynamicPermission.Application.dll
+D:\asp.net_workspace\Dynamic_Permission\src\DynamicPermission.Infrastructure\bin\Debug\net7.0\DynamicPermission.Domain.dll
+D:\asp.net_workspace\Dynamic_Permission\src\DynamicPermission.Infrastructure\bin\Debug\net7.0\DynamicPermission.Application.pdb
+D:\asp.net_workspace\Dynamic_Permission\src\DynamicPermission.Infrastructure\bin\Debug\net7.0\DynamicPermission.Domain.pdb
+D:\asp.net_workspace\Dynamic_Permission\src\DynamicPermission.Infrastructure\obj\Debug\net7.0\DynamicPermission.Infrastructure.csproj.AssemblyReference.cache
+D:\asp.net_workspace\Dynamic_Permission\src\DynamicPermission.Infrastructure\obj\Debug\net7.0\DynamicPermission.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+D:\asp.net_workspace\Dynamic_Permission\src\DynamicPermission.Infrastructure\obj\Debug\net7.0\DynamicPermission.Infrastructure.AssemblyInfoInputs.cache
+D:\asp.net_workspace\Dynamic_Permission\src\DynamicPermission.Infrastructure\obj\Debug\net7.0\DynamicPermission.Infrastructure.AssemblyInfo.cs
+D:\asp.net_workspace\Dynamic_Permission\src\DynamicPermission.Infrastructure\obj\Debug\net7.0\DynamicPermission.Infrastructure.csproj.CoreCompileInputs.cache
+D:\asp.net_workspace\Dynamic_Permission\src\DynamicPermission.Infrastructure\obj\Debug\net7.0\DynamicPermission.Infrastructure.csproj.CopyComplete
+D:\asp.net_workspace\Dynamic_Permission\src\DynamicPermission.Infrastructure\obj\Debug\net7.0\DynamicPermission.Infrastructure.dll
+D:\asp.net_workspace\Dynamic_Permission\src\DynamicPermission.Infrastructure\obj\Debug\net7.0\refint\DynamicPermission.Infrastructure.dll
+D:\asp.net_workspace\Dynamic_Permission\src\DynamicPermission.Infrastructure\obj\Debug\net7.0\DynamicPermission.Infrastructure.pdb
+D:\asp.net_workspace\Dynamic_Permission\src\DynamicPermission.Infrastructure\obj\Debug\net7.0\ref\DynamicPermission.Infrastructure.dll

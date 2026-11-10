@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "J2X+haWZjNYtyzDO8u73Qga5l0OC5vxKXceyZfNXW7g=",
+  "Source": "DynamicPermission.API",
+  "BasePath": "_content/DynamicPermission.API",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

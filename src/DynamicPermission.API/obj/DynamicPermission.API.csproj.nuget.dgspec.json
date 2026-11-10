@@ -1,0 +1,301 @@
+{
+  "format": 1,
+  "restore": {
+    "D:\\asp.net_workspace\\Dynamic_Permission\\src\\DynamicPermission.API\\DynamicPermission.API.csproj": {}
+  },
+  "projects": {
+    "D:\\asp.net_workspace\\Dynamic_Permission\\src\\DynamicPermission.API\\DynamicPermission.API.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\asp.net_workspace\\Dynamic_Permission\\src\\DynamicPermission.API\\DynamicPermission.API.csproj",
+        "projectName": "DynamicPermission.API",
+        "projectPath": "D:\\asp.net_workspace\\Dynamic_Permission\\src\\DynamicPermission.API\\DynamicPermission.API.csproj",
+        "packagesPath": "C:\\Users\\thang\\.nuget\\packages\\",
+        "outputPath": "D:\\asp.net_workspace\\Dynamic_Permission\\src\\DynamicPermission.API\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\thang\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net7.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net7.0": {
+            "targetAlias": "net7.0",
+            "projectReferences": {
+              "D:\\asp.net_workspace\\Dynamic_Permission\\src\\DynamicPermission.Application\\DynamicPermission.Application.csproj": {
+                "projectPath": "D:\\asp.net_workspace\\Dynamic_Permission\\src\\DynamicPermission.Application\\DynamicPermission.Application.csproj"
+              },
+              "D:\\asp.net_workspace\\Dynamic_Permission\\src\\DynamicPermission.Infrastructure\\DynamicPermission.Infrastructure.csproj": {
+                "projectPath": "D:\\asp.net_workspace\\Dynamic_Permission\\src\\DynamicPermission.Infrastructure\\DynamicPermission.Infrastructure.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net7.0": {
+          "targetAlias": "net7.0",
+          "dependencies": {
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[7.0.20, )"
+            },
+            "Microsoft.AspNetCore.OpenApi": {
+              "target": "Package",
+              "version": "[7.0.17, )"
+            },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[7.0.20, )"
+            },
+            "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[6.5.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.407\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "D:\\asp.net_workspace\\Dynamic_Permission\\src\\DynamicPermission.Application\\DynamicPermission.Application.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\asp.net_workspace\\Dynamic_Permission\\src\\DynamicPermission.Application\\DynamicPermission.Application.csproj",
+        "projectName": "DynamicPermission.Application",
+        "projectPath": "D:\\asp.net_workspace\\Dynamic_Permission\\src\\DynamicPermission.Application\\DynamicPermission.Application.csproj",
+        "packagesPath": "C:\\Users\\thang\\.nuget\\packages\\",
+        "outputPath": "D:\\asp.net_workspace\\Dynamic_Permission\\src\\DynamicPermission.Application\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\thang\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net7.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net7.0": {
+            "targetAlias": "net7.0",
+            "projectReferences": {
+              "D:\\asp.net_workspace\\Dynamic_Permission\\src\\DynamicPermission.Domain\\DynamicPermission.Domain.csproj": {
+                "projectPath": "D:\\asp.net_workspace\\Dynamic_Permission\\src\\DynamicPermission.Domain\\DynamicPermission.Domain.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net7.0": {
+          "targetAlias": "net7.0",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[7.0.20, )"
+            },
+            "Microsoft.Extensions.DependencyInjection.Abstractions": {
+              "target": "Package",
+              "version": "[7.0.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.407\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "D:\\asp.net_workspace\\Dynamic_Permission\\src\\DynamicPermission.Domain\\DynamicPermission.Domain.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\asp.net_workspace\\Dynamic_Permission\\src\\DynamicPermission.Domain\\DynamicPermission.Domain.csproj",
+        "projectName": "DynamicPermission.Domain",
+        "projectPath": "D:\\asp.net_workspace\\Dynamic_Permission\\src\\DynamicPermission.Domain\\DynamicPermission.Domain.csproj",
+        "packagesPath": "C:\\Users\\thang\\.nuget\\packages\\",
+        "outputPath": "D:\\asp.net_workspace\\Dynamic_Permission\\src\\DynamicPermission.Domain\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\thang\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net7.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net7.0": {
+            "targetAlias": "net7.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net7.0": {
+          "targetAlias": "net7.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.407\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "D:\\asp.net_workspace\\Dynamic_Permission\\src\\DynamicPermission.Infrastructure\\DynamicPermission.Infrastructure.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\asp.net_workspace\\Dynamic_Permission\\src\\DynamicPermission.Infrastructure\\DynamicPermission.Infrastructure.csproj",
+        "projectName": "DynamicPermission.Infrastructure",
+        "projectPath": "D:\\asp.net_workspace\\Dynamic_Permission\\src\\DynamicPermission.Infrastructure\\DynamicPermission.Infrastructure.csproj",
+        "packagesPath": "C:\\Users\\thang\\.nuget\\packages\\",
+        "outputPath": "D:\\asp.net_workspace\\Dynamic_Permission\\src\\DynamicPermission.Infrastructure\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\thang\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net7.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net7.0": {
+            "targetAlias": "net7.0",
+            "projectReferences": {
+              "D:\\asp.net_workspace\\Dynamic_Permission\\src\\DynamicPermission.Application\\DynamicPermission.Application.csproj": {
+                "projectPath": "D:\\asp.net_workspace\\Dynamic_Permission\\src\\DynamicPermission.Application\\DynamicPermission.Application.csproj"
+              },
+              "D:\\asp.net_workspace\\Dynamic_Permission\\src\\DynamicPermission.Domain\\DynamicPermission.Domain.csproj": {
+                "projectPath": "D:\\asp.net_workspace\\Dynamic_Permission\\src\\DynamicPermission.Domain\\DynamicPermission.Domain.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net7.0": {
+          "targetAlias": "net7.0",
+          "dependencies": {
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[7.0.20, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[7.0.20, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[7.0.20, )"
+            },
+            "Microsoft.Extensions.Caching.Memory": {
+              "target": "Package",
+              "version": "[7.0.0, )"
+            },
+            "Microsoft.Extensions.Configuration.Abstractions": {
+              "target": "Package",
+              "version": "[7.0.0, )"
+            },
+            "Microsoft.Extensions.DependencyInjection.Abstractions": {
+              "target": "Package",
+              "version": "[7.0.0, )"
+            },
+            "Microsoft.Extensions.Identity.Core": {
+              "target": "Package",
+              "version": "[7.0.20, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.407\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

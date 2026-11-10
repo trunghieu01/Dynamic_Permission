@@ -1,0 +1,11 @@
+D:\asp.net_workspace\Dynamic_Permission\src\DynamicPermission.Domain\bin\Debug\net7.0\DynamicPermission.Domain.deps.json
+D:\asp.net_workspace\Dynamic_Permission\src\DynamicPermission.Domain\bin\Debug\net7.0\DynamicPermission.Domain.dll
+D:\asp.net_workspace\Dynamic_Permission\src\DynamicPermission.Domain\bin\Debug\net7.0\DynamicPermission.Domain.pdb
+D:\asp.net_workspace\Dynamic_Permission\src\DynamicPermission.Domain\obj\Debug\net7.0\DynamicPermission.Domain.GeneratedMSBuildEditorConfig.editorconfig
+D:\asp.net_workspace\Dynamic_Permission\src\DynamicPermission.Domain\obj\Debug\net7.0\DynamicPermission.Domain.AssemblyInfoInputs.cache
+D:\asp.net_workspace\Dynamic_Permission\src\DynamicPermission.Domain\obj\Debug\net7.0\DynamicPermission.Domain.AssemblyInfo.cs
+D:\asp.net_workspace\Dynamic_Permission\src\DynamicPermission.Domain\obj\Debug\net7.0\DynamicPermission.Domain.csproj.CoreCompileInputs.cache
+D:\asp.net_workspace\Dynamic_Permission\src\DynamicPermission.Domain\obj\Debug\net7.0\DynamicPermission.Domain.dll
+D:\asp.net_workspace\Dynamic_Permission\src\DynamicPermission.Domain\obj\Debug\net7.0\refint\DynamicPermission.Domain.dll
+D:\asp.net_workspace\Dynamic_Permission\src\DynamicPermission.Domain\obj\Debug\net7.0\DynamicPermission.Domain.pdb
+D:\asp.net_workspace\Dynamic_Permission\src\DynamicPermission.Domain\obj\Debug\net7.0\ref\DynamicPermission.Domain.dll

@@ -1,0 +1,33 @@
+# Build results
+[Bb]in/
+[Oo]bj/
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Aa]rtifacts/
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# .NET tooling
+project.lock.json
+project.fragment.lock.json
+artifacts/
+TestResults/
+*.coverage
+*.coveragexml
+
+# Local configuration and secrets
+appsettings.Development.json
+appsettings.*.Local.json
+secrets.json
+
+# Operating system files
+.DS_Store
+Thumbs.db
+desktop.ini

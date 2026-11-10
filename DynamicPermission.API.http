@@ -1,0 +1,14 @@
+@baseUrl = https://localhost:7049
+@accessToken = paste-a-valid-access-token-here
+
+### Get customers (requires customer.view)
+GET {{baseUrl}}/api/demo/customers
+Authorization: Bearer {{accessToken}}
+
+### Create customer (requires customer.create)
+POST {{baseUrl}}/api/demo/customers
+Authorization: Bearer {{accessToken}}
+
+### Delete customer (requires customer.delete)
+DELETE {{baseUrl}}/api/demo/customers/00000000-0000-0000-0000-000000000001
+Authorization: Bearer {{accessToken}}
