@@ -9,6 +9,8 @@ x86/
 
 # Visual Studio
 .vs/
+.vscode/
+.config/
 *.user
 *.suo
 *.userosscache
