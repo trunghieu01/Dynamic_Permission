@@ -85,3 +85,15 @@ D:\asp.net_workspace\Dynamic_Permission\src\DynamicPermission.API\bin\Debug\net7
 D:\asp.net_workspace\Dynamic_Permission\src\DynamicPermission.API\bin\Debug\net7.0\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
 D:\asp.net_workspace\Dynamic_Permission\src\DynamicPermission.API\bin\Debug\net7.0\Microsoft.Extensions.Identity.Core.dll
 D:\asp.net_workspace\Dynamic_Permission\src\DynamicPermission.API\bin\Debug\net7.0\Microsoft.Extensions.Options.dll
+D:\asp.net_workspace\Dynamic_Permission\src\DynamicPermission.API\bin\Debug\net7.0\Serilog.dll
+D:\asp.net_workspace\Dynamic_Permission\src\DynamicPermission.API\bin\Debug\net7.0\Serilog.AspNetCore.dll
+D:\asp.net_workspace\Dynamic_Permission\src\DynamicPermission.API\bin\Debug\net7.0\Serilog.Extensions.Hosting.dll
+D:\asp.net_workspace\Dynamic_Permission\src\DynamicPermission.API\bin\Debug\net7.0\Serilog.Extensions.Logging.dll
+D:\asp.net_workspace\Dynamic_Permission\src\DynamicPermission.API\bin\Debug\net7.0\Serilog.Formatting.Compact.dll
+D:\asp.net_workspace\Dynamic_Permission\src\DynamicPermission.API\bin\Debug\net7.0\Serilog.Settings.Configuration.dll
+D:\asp.net_workspace\Dynamic_Permission\src\DynamicPermission.API\bin\Debug\net7.0\Serilog.Sinks.Async.dll
+D:\asp.net_workspace\Dynamic_Permission\src\DynamicPermission.API\bin\Debug\net7.0\Serilog.Sinks.Console.dll
+D:\asp.net_workspace\Dynamic_Permission\src\DynamicPermission.API\bin\Debug\net7.0\Serilog.Sinks.Debug.dll
+D:\asp.net_workspace\Dynamic_Permission\src\DynamicPermission.API\bin\Debug\net7.0\Serilog.Sinks.File.dll
+D:\asp.net_workspace\Dynamic_Permission\src\DynamicPermission.API\bin\Debug\net7.0\Serilog.Sinks.PeriodicBatching.dll
+D:\asp.net_workspace\Dynamic_Permission\src\DynamicPermission.API\bin\Debug\net7.0\Serilog.Sinks.Seq.dll

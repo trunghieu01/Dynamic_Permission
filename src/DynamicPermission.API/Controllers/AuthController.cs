@@ -1,3 +1,4 @@
+using DynamicPermission.API.Attributes;
 using DynamicPermission.Application.Models.Auth;
 using DynamicPermission.Application.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -31,15 +32,8 @@ public class AuthController : ControllerBase
             return BadRequest(ModelState);
         }
 
-        try
-        {
-            var result = await _authService.LoginAsync(request, cancellationToken);
-            return Ok(result);
-        }
-        catch (UnauthorizedAccessException ex)
-        {
-            return StatusCode(StatusCodes.Status401Unauthorized, new { message = ex.Message });
-        }
+        var result = await _authService.LoginAsync(request, cancellationToken);
+        return Ok(result);
     }
 
     /// <summary>
@@ -57,15 +51,8 @@ public class AuthController : ControllerBase
             return BadRequest(ModelState);
         }
 
-        try
-        {
-            var result = await _authService.RefreshTokenAsync(request, cancellationToken);
-            return Ok(result);
-        }
-        catch (UnauthorizedAccessException ex)
-        {
-            return StatusCode(StatusCodes.Status401Unauthorized, new { message = ex.Message });
-        }
+        var result = await _authService.RefreshTokenAsync(request, cancellationToken);
+        return Ok(result);
     }
 
     /// <summary>
@@ -78,26 +65,15 @@ public class AuthController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetCurrentUser(CancellationToken cancellationToken)
     {
-        try
-        {
-            var result = await _authService.GetCurrentUserAsync(cancellationToken);
-            return Ok(result);
-        }
-        catch (UnauthorizedAccessException ex)
-        {
-            return StatusCode(StatusCodes.Status401Unauthorized, new { message = ex.Message });
-        }
-        catch (KeyNotFoundException ex)
-        {
-            return NotFound(new { message = ex.Message });
-        }
+        var result = await _authService.GetCurrentUserAsync(cancellationToken);
+        return Ok(result);
     }
 
     /// <summary>
     /// Đăng ký tài khoản người dùng mới (Dành cho tài khoản quản trị có quyền).
     /// </summary>
     [HttpPost("register")]
-    [Authorize]
+    [HasPermission("user.create")]
     [ProducesResponseType(typeof(RegisterUserResponse), StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -109,26 +85,15 @@ public class AuthController : ControllerBase
             return BadRequest(ModelState);
         }
 
-        try
-        {
-            var result = await _authService.RegisterUserAsync(request, cancellationToken);
-            return StatusCode(StatusCodes.Status201Created, result);
-        }
-        catch (InvalidOperationException ex)
-        {
-            return BadRequest(new { message = ex.Message });
-        }
-        catch (KeyNotFoundException ex)
-        {
-            return NotFound(new { message = ex.Message });
-        }
+        var result = await _authService.RegisterUserAsync(request, cancellationToken);
+        return StatusCode(StatusCodes.Status201Created, result);
     }
 
     /// <summary>
     /// Reset mật khẩu của tài khoản và hủy toàn bộ phiên làm việc cũ (Dành cho tài khoản quản trị có quyền).
     /// </summary>
     [HttpPost("reset-password")]
-    [Authorize]
+    [HasPermission("user.update")]
     [ProducesResponseType(typeof(ResetPasswordResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -140,14 +105,7 @@ public class AuthController : ControllerBase
             return BadRequest(ModelState);
         }
 
-        try
-        {
-            var result = await _authService.ResetPasswordAsync(request, cancellationToken);
-            return Ok(result);
-        }
-        catch (KeyNotFoundException ex)
-        {
-            return NotFound(new { message = ex.Message });
-        }
+        var result = await _authService.ResetPasswordAsync(request, cancellationToken);
+        return Ok(result);
     }
 }

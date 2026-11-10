@@ -163,3 +163,16 @@ D:\asp.net_workspace\Dynamic_Permission\tests\DynamicPermission.UnitTests\obj\De
 D:\asp.net_workspace\Dynamic_Permission\tests\DynamicPermission.UnitTests\obj\Debug\net7.0\DynamicPermission.UnitTests.pdb
 D:\asp.net_workspace\Dynamic_Permission\tests\DynamicPermission.UnitTests\obj\Debug\net7.0\DynamicPermission.UnitTests.genruntimeconfig.cache
 D:\asp.net_workspace\Dynamic_Permission\tests\DynamicPermission.UnitTests\obj\Debug\net7.0\ref\DynamicPermission.UnitTests.dll
+D:\asp.net_workspace\Dynamic_Permission\tests\DynamicPermission.UnitTests\bin\Debug\net7.0\Microsoft.Extensions.DependencyModel.dll
+D:\asp.net_workspace\Dynamic_Permission\tests\DynamicPermission.UnitTests\bin\Debug\net7.0\Serilog.dll
+D:\asp.net_workspace\Dynamic_Permission\tests\DynamicPermission.UnitTests\bin\Debug\net7.0\Serilog.AspNetCore.dll
+D:\asp.net_workspace\Dynamic_Permission\tests\DynamicPermission.UnitTests\bin\Debug\net7.0\Serilog.Extensions.Hosting.dll
+D:\asp.net_workspace\Dynamic_Permission\tests\DynamicPermission.UnitTests\bin\Debug\net7.0\Serilog.Extensions.Logging.dll
+D:\asp.net_workspace\Dynamic_Permission\tests\DynamicPermission.UnitTests\bin\Debug\net7.0\Serilog.Formatting.Compact.dll
+D:\asp.net_workspace\Dynamic_Permission\tests\DynamicPermission.UnitTests\bin\Debug\net7.0\Serilog.Settings.Configuration.dll
+D:\asp.net_workspace\Dynamic_Permission\tests\DynamicPermission.UnitTests\bin\Debug\net7.0\Serilog.Sinks.Async.dll
+D:\asp.net_workspace\Dynamic_Permission\tests\DynamicPermission.UnitTests\bin\Debug\net7.0\Serilog.Sinks.Console.dll
+D:\asp.net_workspace\Dynamic_Permission\tests\DynamicPermission.UnitTests\bin\Debug\net7.0\Serilog.Sinks.Debug.dll
+D:\asp.net_workspace\Dynamic_Permission\tests\DynamicPermission.UnitTests\bin\Debug\net7.0\Serilog.Sinks.File.dll
+D:\asp.net_workspace\Dynamic_Permission\tests\DynamicPermission.UnitTests\bin\Debug\net7.0\Serilog.Sinks.PeriodicBatching.dll
+D:\asp.net_workspace\Dynamic_Permission\tests\DynamicPermission.UnitTests\bin\Debug\net7.0\Serilog.Sinks.Seq.dll

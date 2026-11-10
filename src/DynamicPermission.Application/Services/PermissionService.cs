@@ -18,12 +18,28 @@ public sealed class PermissionService : IPermissionService
         Guid userId,
         CancellationToken cancellationToken = default)
     {
-        var cacheVersion = _permissionCache.Version;
-        if (_permissionCache.TryGet(userId, cacheVersion, out var cachedPermissions))
-        {
-            return new HashSet<string>(cachedPermissions, StringComparer.OrdinalIgnoreCase);
-        }
+        var permissionCodes = await _permissionCache.GetOrCreateAsync(
+            userId,
+            token => ResolveRoleIdAsync(userId, token),
+            token => LoadPermissionsAsync(userId, token),
+            cancellationToken);
 
+        return new HashSet<string>(permissionCodes, StringComparer.OrdinalIgnoreCase);
+    }
+
+    private Task<Guid?> ResolveRoleIdAsync(Guid userId, CancellationToken cancellationToken)
+    {
+        return _dbContext.Users
+            .AsNoTracking()
+            .Where(user => user.Id == userId)
+            .Select(user => (Guid?)user.RoleId)
+            .SingleOrDefaultAsync(cancellationToken);
+    }
+
+    private async Task<PermissionCacheSnapshot> LoadPermissionsAsync(
+        Guid userId,
+        CancellationToken cancellationToken)
+    {
         var user = await _dbContext.Users
             .AsNoTracking()
             .Include(candidate => candidate.Role)
@@ -34,17 +50,23 @@ public sealed class PermissionService : IPermissionService
             .SingleOrDefaultAsync(candidate => candidate.Id == userId, cancellationToken);
 
         var effectivePermissions = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
-        if (user is not null && user.IsActive)
+        if (user is null)
         {
-            if (user.Role?.IsActive == true)
+            return new PermissionCacheSnapshot(null, Array.Empty<string>());
+        }
+
+        if (user.IsActive && user.Role?.IsActive == true)
+        {
+            foreach (var rolePermission in user.Role.RolePermissions)
             {
-                foreach (var rolePermission in user.Role.RolePermissions)
+                if (rolePermission.Permission.IsActive)
                 {
                     effectivePermissions.Add(rolePermission.Permission.Code);
                 }
             }
 
-            foreach (var userPermission in user.UserPermissions.Where(permission => permission.IsGranted))
+            foreach (var userPermission in user.UserPermissions.Where(permission =>
+                         permission.IsGranted && permission.Permission.IsActive))
             {
                 effectivePermissions.Add(userPermission.Permission.Code);
             }
@@ -55,11 +77,6 @@ public sealed class PermissionService : IPermissionService
             }
         }
 
-        if (_permissionCache.Version == cacheVersion)
-        {
-            _permissionCache.Set(userId, cacheVersion, effectivePermissions);
-        }
-
-        return effectivePermissions;
+        return new PermissionCacheSnapshot(user.RoleId, effectivePermissions);
     }
 }

@@ -1,4 +1,5 @@
 using System.Security.Claims;
+using DynamicPermission.Application.Common.Exceptions;
 using DynamicPermission.Application.Common.Interfaces;
 using DynamicPermission.Application.Models.Auth;
 using DynamicPermission.Domain.Entities;
@@ -205,7 +206,7 @@ public class AuthService : IAuthService
 
         if (isDuplicate)
         {
-            throw new InvalidOperationException("Tên đăng nhập hoặc Email đã tồn tại trong hệ thống.");
+            throw new ConflictException("Tên đăng nhập hoặc Email đã tồn tại trong hệ thống.");
         }
 
         // 2. Validate Role exists and active
@@ -217,7 +218,7 @@ public class AuthService : IAuthService
 
         if (!role.IsActive)
         {
-            throw new InvalidOperationException("Vai trò (Role) được chỉ định hiện đang bị tạm khóa.");
+            throw new ConflictException("Vai trò (Role) được chỉ định hiện đang bị tạm khóa.");
         }
 
         // 3. Determine password (use provided or generate a strong random one)

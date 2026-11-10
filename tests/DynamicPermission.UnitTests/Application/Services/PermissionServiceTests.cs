@@ -16,7 +16,9 @@ public class PermissionServiceTests
 
     public PermissionServiceTests()
     {
-        _permissionCache = new MemoryPermissionCache(new MemoryCache(new MemoryCacheOptions()));
+        _permissionCache = new MemoryPermissionCache(
+            new MemoryCache(new MemoryCacheOptions()),
+            TimeSpan.FromMinutes(1));
         _context = TestDbContextFactory.Create(permissionCache: _permissionCache);
         _permissionService = new PermissionService(_context, _permissionCache);
     }
@@ -70,6 +72,21 @@ public class PermissionServiceTests
     }
 
     [Fact]
+    public async Task GetUserEffectivePermissions_ShouldExcludeDirectGrants_WhenRoleIsInactive()
+    {
+        var role = TestDataBuilder.CreateRole(isActive: false);
+        var user = TestDataBuilder.CreateUser(role.Id);
+        var directGrant = CreatePermission("customer.export");
+        AddEntities(role, user, directGrant);
+        _context.UserPermissions.Add(CreateUserPermission(user, directGrant, isGranted: true));
+        await _context.SaveChangesAsync();
+
+        var result = await _permissionService.GetUserEffectivePermissionsAsync(user.Id);
+
+        result.Should().BeEmpty();
+    }
+
+    [Fact]
     public async Task GetUserEffectivePermissions_ShouldIncludeDirectGrant_EvenIfRoleDoesNotHaveIt()
     {
         var role = TestDataBuilder.CreateRole();
@@ -101,6 +118,22 @@ public class PermissionServiceTests
     }
 
     [Fact]
+    public async Task GetUserEffectivePermissions_ShouldExcludeInactivePermission()
+    {
+        var role = TestDataBuilder.CreateRole();
+        var user = TestDataBuilder.CreateUser(role.Id);
+        var inactivePermission = CreatePermission("customer.delete");
+        inactivePermission.IsActive = false;
+        AddEntities(role, user, inactivePermission);
+        _context.RolePermissions.Add(CreateRolePermission(role, inactivePermission));
+        await _context.SaveChangesAsync();
+
+        var result = await _permissionService.GetUserEffectivePermissionsAsync(user.Id);
+
+        result.Should().BeEmpty();
+    }
+
+    [Fact]
     public async Task GetUserEffectivePermissions_ShouldRefreshCachedPermissions_AfterDatabaseChanges()
     {
         var role = TestDataBuilder.CreateRole();
@@ -117,6 +150,90 @@ public class PermissionServiceTests
         var updatedPermissions = await _permissionService.GetUserEffectivePermissionsAsync(user.Id);
 
         updatedPermissions.Should().Contain("customer.view");
+    }
+
+    [Fact]
+    public async Task GetUserEffectivePermissions_ShouldRefreshWhenDirectOverrideChanges()
+    {
+        var role = TestDataBuilder.CreateRole();
+        var user = TestDataBuilder.CreateUser(role.Id);
+        var export = CreatePermission("customer.export");
+        AddEntities(role, user, export);
+        var directGrant = CreateUserPermission(user, export, isGranted: true);
+        _context.UserPermissions.Add(directGrant);
+        await _context.SaveChangesAsync();
+
+        (await _permissionService.GetUserEffectivePermissionsAsync(user.Id))
+            .Should().Contain("customer.export");
+
+        directGrant.IsGranted = false;
+        await _context.SaveChangesAsync();
+
+        (await _permissionService.GetUserEffectivePermissionsAsync(user.Id))
+            .Should().NotContain("customer.export");
+    }
+
+    [Fact]
+    public async Task GetUserEffectivePermissions_ShouldRefreshWhenUserIsDeactivated()
+    {
+        var role = TestDataBuilder.CreateRole();
+        var user = TestDataBuilder.CreateUser(role.Id);
+        var view = CreatePermission("customer.view");
+        AddEntities(role, user, view);
+        _context.RolePermissions.Add(CreateRolePermission(role, view));
+        await _context.SaveChangesAsync();
+
+        (await _permissionService.GetUserEffectivePermissionsAsync(user.Id))
+            .Should().Contain("customer.view");
+
+        user.IsActive = false;
+        await _context.SaveChangesAsync();
+
+        (await _permissionService.GetUserEffectivePermissionsAsync(user.Id))
+            .Should().BeEmpty();
+    }
+
+    [Fact]
+    public async Task GetUserEffectivePermissions_ShouldRefreshWhenRoleIsDeactivated()
+    {
+        var role = TestDataBuilder.CreateRole();
+        var user = TestDataBuilder.CreateUser(role.Id);
+        var view = CreatePermission("customer.view");
+        AddEntities(role, user, view);
+        _context.RolePermissions.Add(CreateRolePermission(role, view));
+        await _context.SaveChangesAsync();
+
+        (await _permissionService.GetUserEffectivePermissionsAsync(user.Id))
+            .Should().Contain("customer.view");
+
+        role.IsActive = false;
+        await _context.SaveChangesAsync();
+
+        (await _permissionService.GetUserEffectivePermissionsAsync(user.Id))
+            .Should().BeEmpty();
+    }
+
+    [Fact]
+    public async Task GetUserEffectivePermissions_ShouldDeduplicateSamePermissionAssignedToDifferentRoles()
+    {
+        var firstRole = TestDataBuilder.CreateRole("ROLE_A", "Role A");
+        var secondRole = TestDataBuilder.CreateRole("ROLE_B", "Role B");
+        var firstUser = TestDataBuilder.CreateUser(firstRole.Id, "first");
+        var secondUser = TestDataBuilder.CreateUser(secondRole.Id, "second");
+        var sharedPermission = CreatePermission("customer.view");
+        _context.Roles.AddRange(firstRole, secondRole);
+        _context.Users.AddRange(firstUser, secondUser);
+        _context.Permissions.Add(sharedPermission);
+        _context.RolePermissions.AddRange(
+            CreateRolePermission(firstRole, sharedPermission),
+            CreateRolePermission(secondRole, sharedPermission));
+        await _context.SaveChangesAsync();
+
+        var firstUserPermissions = await _permissionService.GetUserEffectivePermissionsAsync(firstUser.Id);
+        var secondUserPermissions = await _permissionService.GetUserEffectivePermissionsAsync(secondUser.Id);
+
+        firstUserPermissions.Should().ContainSingle().Which.Should().Be("customer.view");
+        secondUserPermissions.Should().ContainSingle().Which.Should().Be("customer.view");
     }
 
     private void AddEntities(Role role, User user, params Permission[] permissions)

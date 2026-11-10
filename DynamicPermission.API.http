@@ -1,5 +1,164 @@
 @baseUrl = https://localhost:7049
 @accessToken = paste-a-valid-access-token-here
+@userId = 00000000-0000-0000-0000-000000000001
+@roleId = 00000000-0000-0000-0000-000000000002
+@permissionId = 00000000-0000-0000-0000-000000000003
+
+### List users with optional filters and pagination
+GET {{baseUrl}}/api/admin/users?page=1&pageSize=20&search=admin&isActive=true
+Authorization: Bearer {{accessToken}}
+
+### Get a user
+GET {{baseUrl}}/api/admin/users/{{userId}}
+Authorization: Bearer {{accessToken}}
+
+### Create a user
+POST {{baseUrl}}/api/admin/users
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "username": "staff01",
+  "email": "staff01@example.com",
+  "fullName": "Staff One",
+  "password": "ChangeMe123!",
+  "roleId": "{{roleId}}"
+}
+
+### Update a user
+PUT {{baseUrl}}/api/admin/users/{{userId}}
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "username": "staff01",
+  "email": "staff01@example.com",
+  "fullName": "Staff One Updated"
+}
+
+### Lock a user
+PUT {{baseUrl}}/api/admin/users/{{userId}}/status
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "isActive": false
+}
+
+### Assign or replace a user's role
+PUT {{baseUrl}}/api/admin/users/{{userId}}/role
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "roleId": "{{roleId}}"
+}
+
+### List a user's role (at most one because User.RoleId is required)
+GET {{baseUrl}}/api/admin/users/{{userId}}/roles?page=1&pageSize=20
+Authorization: Bearer {{accessToken}}
+
+### List effective permissions for a user
+GET {{baseUrl}}/api/admin/users/{{userId}}/effective-permissions?page=1&pageSize=20&module=user
+Authorization: Bearer {{accessToken}}
+
+### List roles with optional filters and pagination
+GET {{baseUrl}}/api/admin/roles?page=1&pageSize=20&search=ADMIN&isActive=true
+Authorization: Bearer {{accessToken}}
+
+### Get a role
+GET {{baseUrl}}/api/admin/roles/{{roleId}}
+Authorization: Bearer {{accessToken}}
+
+### Create a role
+POST {{baseUrl}}/api/admin/roles
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "code": "SUPPORT",
+  "name": "Support",
+  "description": "Support team role"
+}
+
+### Update a role
+PUT {{baseUrl}}/api/admin/roles/{{roleId}}
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "code": "SUPPORT",
+  "name": "Support Team",
+  "description": "Updated support team role"
+}
+
+### Deactivate a role (soft delete)
+DELETE {{baseUrl}}/api/admin/roles/{{roleId}}
+Authorization: Bearer {{accessToken}}
+
+### Reactivate a role
+PUT {{baseUrl}}/api/admin/roles/{{roleId}}/status
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "isActive": true
+}
+
+### List permissions assigned to a role
+GET {{baseUrl}}/api/admin/roles/{{roleId}}/permissions?page=1&pageSize=20&module=user
+Authorization: Bearer {{accessToken}}
+
+### Assign a permission to a role
+PUT {{baseUrl}}/api/admin/roles/{{roleId}}/permissions/{{permissionId}}
+Authorization: Bearer {{accessToken}}
+
+### Remove a permission from a role
+DELETE {{baseUrl}}/api/admin/roles/{{roleId}}/permissions/{{permissionId}}
+Authorization: Bearer {{accessToken}}
+
+### List permissions with optional filters and pagination
+GET {{baseUrl}}/api/admin/permissions?page=1&pageSize=20&module=user&isActive=true
+Authorization: Bearer {{accessToken}}
+
+### Get a permission
+GET {{baseUrl}}/api/admin/permissions/{{permissionId}}
+Authorization: Bearer {{accessToken}}
+
+### Create a permission
+POST {{baseUrl}}/api/admin/permissions
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "code": "user.audit.view",
+  "name": "View user audit",
+  "module": "user",
+  "action": "audit.view",
+  "description": "View user audit data"
+}
+
+### Update a permission
+PUT {{baseUrl}}/api/admin/permissions/{{permissionId}}
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "code": "user.audit.view",
+  "name": "View user audit",
+  "module": "user",
+  "action": "audit.view",
+  "description": "Updated description"
+}
+
+### Deactivate a permission
+PUT {{baseUrl}}/api/admin/permissions/{{permissionId}}/status
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "isActive": false
+}
 
 ### Get customers (requires customer.view)
 GET {{baseUrl}}/api/demo/customers

@@ -1,4 +1,5 @@
 using System.Security.Claims;
+using DynamicPermission.Application.Common.Exceptions;
 using DynamicPermission.Application.Common.Interfaces;
 using DynamicPermission.Application.Models.Auth;
 using DynamicPermission.Application.Services;
@@ -400,7 +401,7 @@ public class AuthServiceTests
     }
 
     [Fact]
-    public async Task RegisterUserAsync_ShouldThrowInvalidOperation_WhenUsernameOrEmailAlreadyExists()
+    public async Task RegisterUserAsync_ShouldThrowConflict_WhenUsernameOrEmailAlreadyExists()
     {
         // Arrange
         var role = TestDataBuilder.CreateRole();
@@ -422,7 +423,7 @@ public class AuthServiceTests
         var act = () => _authService.RegisterUserAsync(request);
 
         // Assert
-        await act.Should().ThrowAsync<InvalidOperationException>()
+        await act.Should().ThrowAsync<ConflictException>()
             .WithMessage("Tên đăng nhập hoặc Email đã tồn tại trong hệ thống.");
     }
 

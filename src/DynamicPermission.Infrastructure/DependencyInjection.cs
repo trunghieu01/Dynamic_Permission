@@ -20,7 +20,10 @@ public static class DependencyInjection
     public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddMemoryCache();
+        services.Configure<PermissionCacheOptions>(
+            configuration.GetSection("PermissionCache"));
         services.AddSingleton<IPermissionCache, MemoryPermissionCache>();
+        services.AddScoped<PermissionCacheTransactionInterceptor>();
         services.AddAuthorization();
         services.AddSingleton<IAuthorizationPolicyProvider, PermissionAuthorizationPolicyProvider>();
         services.AddScoped<IAuthorizationHandler, PermissionAuthorizationHandler>();
@@ -29,8 +32,9 @@ public static class DependencyInjection
         var connectionString = configuration.GetConnectionString("DefaultConnection")
             ?? throw new InvalidOperationException("Connection string 'DefaultConnection' was not found in configuration.");
 
-        services.AddDbContext<DynamicPermissionDbContext>(options =>
+        services.AddDbContext<DynamicPermissionDbContext>((provider, options) =>
         {
+            options.AddInterceptors(provider.GetRequiredService<PermissionCacheTransactionInterceptor>());
             options.UseSqlServer(connectionString, sqlOptions =>
             {
                 sqlOptions.MigrationsAssembly(typeof(DynamicPermissionDbContext).Assembly.FullName);

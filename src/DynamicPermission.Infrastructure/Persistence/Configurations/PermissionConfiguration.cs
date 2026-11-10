@@ -36,6 +36,10 @@ public class PermissionConfiguration : IEntityTypeConfiguration<Permission>
         builder.Property(p => p.Description)
             .HasMaxLength(255);
 
+        builder.Property(p => p.IsActive)
+            .IsRequired()
+            .HasDefaultValue(true);
+
         // Audit fields
         builder.Property(p => p.CreatedAt)
             .IsRequired()

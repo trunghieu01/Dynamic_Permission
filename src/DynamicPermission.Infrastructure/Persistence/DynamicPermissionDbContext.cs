@@ -1,4 +1,5 @@
 using DynamicPermission.Application.Common.Interfaces;
+using DynamicPermission.Infrastructure.Authorization;
 using DynamicPermission.Domain.Common;
 using DynamicPermission.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -8,12 +9,15 @@ namespace DynamicPermission.Infrastructure.Persistence;
 public class DynamicPermissionDbContext : DbContext, IApplicationDbContext
 {
     private readonly IPermissionCache? _permissionCache;
+    private readonly PermissionCacheTransactionInterceptor? _transactionInterceptor;
 
     public DynamicPermissionDbContext(
         DbContextOptions<DynamicPermissionDbContext> options,
-        IPermissionCache? permissionCache = null) : base(options)
+        IPermissionCache? permissionCache = null,
+        PermissionCacheTransactionInterceptor? transactionInterceptor = null) : base(options)
     {
         _permissionCache = permissionCache;
+        _transactionInterceptor = transactionInterceptor;
     }
 
     public DbSet<User> Users => Set<User>();
@@ -32,40 +36,72 @@ public class DynamicPermissionDbContext : DbContext, IApplicationDbContext
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
         UpdateAuditFields();
-        var shouldInvalidatePermissions = HasPermissionChanges();
-        return SaveChangesAndInvalidatePermissionsAsync(shouldInvalidatePermissions, cancellationToken);
+        var permissionChanges = GetPermissionChanges();
+        return SaveChangesAndInvalidatePermissionsAsync(permissionChanges, cancellationToken);
     }
 
     public override int SaveChanges()
     {
         UpdateAuditFields();
-        var shouldInvalidatePermissions = HasPermissionChanges();
+        var permissionChanges = GetPermissionChanges();
         var result = base.SaveChanges();
-        InvalidatePermissions(shouldInvalidatePermissions);
+        InvalidatePermissions(permissionChanges);
         return result;
     }
 
     private async Task<int> SaveChangesAndInvalidatePermissionsAsync(
-        bool shouldInvalidatePermissions,
+        PermissionCacheInvalidation changes,
         CancellationToken cancellationToken)
     {
         var result = await base.SaveChangesAsync(cancellationToken);
-        InvalidatePermissions(shouldInvalidatePermissions);
+        InvalidatePermissions(changes);
         return result;
     }
 
-    private bool HasPermissionChanges()
+    private PermissionCacheInvalidation GetPermissionChanges()
     {
-        return ChangeTracker.Entries().Any(entry =>
-            (entry.State is EntityState.Added or EntityState.Modified or EntityState.Deleted)
-            && (entry.Entity is User or Role or Permission or RolePermission or UserPermission));
+        var changes = new PermissionCacheInvalidation();
+        foreach (var entry in ChangeTracker.Entries())
+        {
+            if (entry.State is not (EntityState.Added or EntityState.Modified or EntityState.Deleted))
+            {
+                continue;
+            }
+
+            switch (entry.Entity)
+            {
+                case User user:
+                    changes.UserIds.Add(user.Id);
+                    break;
+                case UserPermission userPermission:
+                    changes.UserIds.Add(userPermission.UserId);
+                    break;
+                case Role role:
+                    changes.RoleIds.Add(role.Id);
+                    break;
+                case RolePermission rolePermission:
+                    changes.RoleIds.Add(rolePermission.RoleId);
+                    break;
+                case Permission:
+                    changes.InvalidateAll = true;
+                    break;
+            }
+        }
+
+        return changes;
     }
 
-    private void InvalidatePermissions(bool shouldInvalidatePermissions)
+    private void InvalidatePermissions(PermissionCacheInvalidation changes)
     {
-        if (shouldInvalidatePermissions)
+        if (_transactionInterceptor is not null)
         {
-            _permissionCache?.InvalidateAll();
+            _transactionInterceptor.InvalidateAfterSave(this, changes);
+            return;
+        }
+
+        if (_permissionCache is not null)
+        {
+            changes.Apply(_permissionCache);
         }
     }
 

@@ -64,7 +64,7 @@ public class AuthControllerTests
     }
 
     [Fact]
-    public async Task Login_ShouldReturn401Unauthorized_WhenAuthServiceThrowsUnauthorized()
+    public async Task Login_ShouldPropagateUnauthorizedException_ToCentralHandler()
     {
         // Arrange
         var request = new LoginRequest { UsernameOrEmail = "admin", Password = "WrongPassword" };
@@ -72,11 +72,8 @@ public class AuthControllerTests
             .ThrowsAsync(new UnauthorizedAccessException("Tên đăng nhập hoặc mật khẩu không chính xác."));
 
         // Act
-        var result = await _controller.Login(request, CancellationToken.None);
-
-        // Assert
-        var objectResult = result.Should().BeOfType<ObjectResult>().Subject;
-        objectResult.StatusCode.Should().Be(StatusCodes.Status401Unauthorized);
+        await Assert.ThrowsAsync<UnauthorizedAccessException>(
+            () => _controller.Login(request, CancellationToken.None));
     }
 
     // ==========================================
@@ -103,7 +100,7 @@ public class AuthControllerTests
     }
 
     [Fact]
-    public async Task RefreshToken_ShouldReturn401Unauthorized_WhenTokenIsExpiredOrRevoked()
+    public async Task RefreshToken_ShouldPropagateUnauthorizedException_ToCentralHandler()
     {
         // Arrange
         var request = new RefreshTokenRequest { AccessToken = "old_token", RefreshToken = "revoked_refresh" };
@@ -111,11 +108,8 @@ public class AuthControllerTests
             .ThrowsAsync(new UnauthorizedAccessException("Refresh Token không hợp lệ hoặc đã hết hạn."));
 
         // Act
-        var result = await _controller.RefreshToken(request, CancellationToken.None);
-
-        // Assert
-        var objectResult = result.Should().BeOfType<ObjectResult>().Subject;
-        objectResult.StatusCode.Should().Be(StatusCodes.Status401Unauthorized);
+        await Assert.ThrowsAsync<UnauthorizedAccessException>(
+            () => _controller.RefreshToken(request, CancellationToken.None));
     }
 
     // ==========================================
@@ -146,18 +140,15 @@ public class AuthControllerTests
     }
 
     [Fact]
-    public async Task GetCurrentUser_ShouldReturn401Unauthorized_WhenUserIsNotAuthenticated()
+    public async Task GetCurrentUser_ShouldPropagateUnauthorizedException_ToCentralHandler()
     {
         // Arrange
         _authServiceMock.Setup(s => s.GetCurrentUserAsync(It.IsAny<CancellationToken>()))
             .ThrowsAsync(new UnauthorizedAccessException("Không xác định được danh tính người dùng hiện tại."));
 
         // Act
-        var result = await _controller.GetCurrentUser(CancellationToken.None);
-
-        // Assert
-        var objectResult = result.Should().BeOfType<ObjectResult>().Subject;
-        objectResult.StatusCode.Should().Be(StatusCodes.Status401Unauthorized);
+        await Assert.ThrowsAsync<UnauthorizedAccessException>(
+            () => _controller.GetCurrentUser(CancellationToken.None));
     }
 
     // ==========================================
@@ -196,7 +187,7 @@ public class AuthControllerTests
     }
 
     [Fact]
-    public async Task RegisterUser_ShouldReturn400BadRequest_WhenUsernameOrEmailAlreadyExists()
+    public async Task RegisterUser_ShouldPropagateConflictException_ToCentralHandler()
     {
         // Arrange
         var request = new RegisterUserRequest
@@ -207,14 +198,12 @@ public class AuthControllerTests
             RoleId = Guid.NewGuid()
         };
         _authServiceMock.Setup(s => s.RegisterUserAsync(request, It.IsAny<CancellationToken>()))
-            .ThrowsAsync(new InvalidOperationException("Tên đăng nhập hoặc Email đã tồn tại trong hệ thống."));
+            .ThrowsAsync(new DynamicPermission.Application.Common.Exceptions.ConflictException(
+                "Tên đăng nhập hoặc Email đã tồn tại trong hệ thống."));
 
         // Act
-        var result = await _controller.RegisterUser(request, CancellationToken.None);
-
-        // Assert
-        var badRequestResult = result.Should().BeOfType<BadRequestObjectResult>().Subject;
-        badRequestResult.StatusCode.Should().Be(StatusCodes.Status400BadRequest);
+        await Assert.ThrowsAsync<DynamicPermission.Application.Common.Exceptions.ConflictException>(
+            () => _controller.RegisterUser(request, CancellationToken.None));
     }
 
     // ==========================================
@@ -246,7 +235,7 @@ public class AuthControllerTests
     }
 
     [Fact]
-    public async Task ResetPassword_ShouldReturn404NotFound_WhenUserDoesNotExist()
+    public async Task ResetPassword_ShouldPropagateNotFoundException_ToCentralHandler()
     {
         // Arrange
         var request = new ResetPasswordRequest { UserId = Guid.NewGuid() };
@@ -254,10 +243,7 @@ public class AuthControllerTests
             .ThrowsAsync(new KeyNotFoundException("Không tìm thấy người dùng cần reset mật khẩu."));
 
         // Act
-        var result = await _controller.ResetPassword(request, CancellationToken.None);
-
-        // Assert
-        var notFoundResult = result.Should().BeOfType<NotFoundObjectResult>().Subject;
-        notFoundResult.StatusCode.Should().Be(StatusCodes.Status404NotFound);
+        await Assert.ThrowsAsync<KeyNotFoundException>(
+            () => _controller.ResetPassword(request, CancellationToken.None));
     }
 }
